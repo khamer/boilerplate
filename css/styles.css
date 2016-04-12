@@ -71,6 +71,7 @@
       display: table-cell;
       vertical-align: top; }
     .columns > hr {
+      border: 0;
       display: table-cell;
       width: 1rem; } }
 
@@ -100,6 +101,72 @@
  *
  * by default, it hides all Menu Items on mobile.
  */
+/**
+ * The tiles mixin provides responsive tiles, with gutters, making use of
+ * display: flex.
+ */
+@media only screen and (min-width: 600px) {
+  .tiles {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
+    margin-left: -1.5em;
+    margin-right: -1.5em;
+    overflow-x: hidden; }
+    .tiles > .tile {
+      margin-left: 1.5em;
+      margin-right: 1.5em;
+      width: calc(50% - 3em); } }
+@media only screen and (min-width: 900px) {
+  .tiles {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start;
+    margin-left: -1.5em;
+    margin-right: -1.5em;
+    overflow-x: hidden; }
+    .tiles > .tile {
+      margin-left: 1.5em;
+      margin-right: 1.5em;
+      width: calc(33.33333% - 3em); } }
+
+/**
+ * asd
+ */
+.features {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  text-align: center; }
+  .features .content {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1024px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    position: relative;
+    display: flex; }
+    .features .content::before, .features .content::after {
+      content: "";
+      display: table; }
+    .features .content::after {
+      clear: both; }
+    .features .content hr {
+      border: 0;
+      width: 2rem; }
+    .features .content .feature {
+      display: flex;
+      flex-grow: 1;
+      flex-basis: 0;
+      flex-flow: column nowrap; }
+    .features .content .actions {
+      margin-top: auto; }
+
 /* = Variables = */
 /* = Mixins = */
 /* = Base = */
