@@ -1,0 +1,173 @@
+/**
+ * The grouping mixin acts as a clear fix; it makes sure that this element
+ * fully contains any floated childen elements by including psuedo elements
+ * with display: table.
+ */
+@mixin grouping {
+    &::before, &::after {
+        content: "";
+        display: table;
+    }
+
+    &::after {
+        clear: both;
+    }
+}
+
+.group {
+    @include grouping;
+}
+
+
+/**
+ * The container mixin imposes the 'site wide' content max width upcon its
+ * contents through the use of max-width and auto margins. It also ensures
+ * at least 1rem padding on the left and right.
+ */
+@mixin container {
+    @include grouping;
+
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1024px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    position: relative;
+}
+
+.container {
+    @include container;
+}
+
+
+/**
+ * The columns mixin makes it so that immmediate child elements appear as
+ * columns. It is responsive, allowing you to specify the media query at which
+ * to switch the layout from stacking to columns.
+ *
+ * Additionally, it assumes the use of <hr> elements to create visual gutters
+ * that are only visible while displayed as columns.
+ */
+@mixin columns($query: "min-width: 600px") {
+    > hr {
+        display: none;
+    }
+
+    @media only screen and ($query) {
+        & {
+            display: table;
+            table-layout: fixed;
+            width: 100%;
+
+            > * {
+                display: table-cell;
+                vertical-align: top;
+            }
+            > hr {
+                display: table-cell;
+                width: 1rem;
+            }
+        }
+    }
+}
+
+.columns {
+    @include columns;
+}
+
+
+/**
+ * The fontawesome mixin simplifies including the fontawesome CSS properties,
+ * and you can optionally specify a character to have it also set the content
+ * property (for use in psuedo elements.)
+ */
+@mixin fontawesome($character:"") {
+	font: normal normal normal 1rem unquote("/") 1 FontAwesome;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	speak: none;
+	text-rendering: auto;
+	text-transform: none;
+
+	@if $character != "" {
+		content: $character;
+	} @else {
+		display: inline-block;
+	}
+}
+
+
+/**
+ * The no-bullets mixin hides bullets, including those created through the
+ * ::before psuedo element.
+ */
+@mixin no-bullets {
+    list-style: none;
+    padding-left: 0;
+
+    li::before {
+        display: none;
+    }
+}
+
+
+@mixin transition($properties: all, $duration: 250ms, $easing: ease-in-out) {
+    @if length($properties) > 1 {
+        -webkit-transition-property: $properties;
+        transition-property: $properties;
+    } @else {
+        -webkit-transition: $properties $duration $easing;
+        transition: $properties $duration $easing;
+    }
+}
+
+
+/**
+ * The dropdown mixin provides CSS only dropdowns for the a nav element.
+ *
+ * It expects the each dropdown to be within an <li> like this:
+ *
+ *     <li>
+ *         <a>Menu Title</a>
+ *         <div class="dropdown">
+ *             <ul>
+ *                 <li><a>Menu Item</a></li>
+ *                 <li><a>Menu Item</a></li>
+ *             </ul>
+ *         </div>
+ *     </li>
+ *
+ * by default, it hides all Menu Items on mobile.
+ */
+@mixin dropdown-nav {
+    z-index: 1;
+
+    li {
+        .dropdown {
+            display: none;
+        }
+    }
+
+    @media only screen and (min-width: 600px) {
+        li:hover {
+            position: relative;
+
+            .dropdown {
+                background: #333;
+                display: block;
+                left: 0;
+                min-width: 100%;
+                position: absolute;
+
+                li {
+                    float: none;
+
+                    a {
+                        font-family: inherit;
+                        font-size: 0.8125rem;
+                    }
+                }
+            }
+        }
+    }
+}
