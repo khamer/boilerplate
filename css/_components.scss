@@ -55,18 +55,15 @@
 
     @media only screen and ($query) {
         & {
-            display: table;
-            table-layout: fixed;
-            width: 100%;
+            display: flex;
 
             > * {
-                display: table-cell;
-                vertical-align: top;
-            }
-            > hr {
-                border: 0;
-                display: table-cell;
-                width: 1rem;
+                flex-basis: 0;
+                flex-grow: 1;
+
+                &:not(:first-child) {
+                    margin-left: 1rem;
+                }
             }
         }
     }
@@ -227,16 +224,15 @@
         @include container;
         display: flex;
 
-        hr {
-            border: 0;
-            width: 2rem;
-        }
-
         .feature {
             display: flex;
             flex-grow: 1;
             flex-basis: 0;
             flex-flow: column nowrap;
+        }
+
+        .feature:not(:first-child) {
+            margin-left: 2rem;
         }
 
         .actions {

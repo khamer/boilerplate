@@ -64,16 +64,12 @@
   display: none; }
 @media only screen and (min-width: 600px) {
   .columns {
-    display: table;
-    table-layout: fixed;
-    width: 100%; }
+    display: flex; }
     .columns > * {
-      display: table-cell;
-      vertical-align: top; }
-    .columns > hr {
-      border: 0;
-      display: table-cell;
-      width: 1rem; } }
+      flex-basis: 0;
+      flex-grow: 1; }
+      .columns > *:not(:first-child) {
+        margin-left: 1rem; } }
 
 /**
  * The fontawesome mixin simplifies including the fontawesome CSS properties,
@@ -156,14 +152,13 @@
       display: table; }
     .features .content::after {
       clear: both; }
-    .features .content hr {
-      border: 0;
-      width: 2rem; }
     .features .content .feature {
       display: flex;
       flex-grow: 1;
       flex-basis: 0;
       flex-flow: column nowrap; }
+    .features .content .feature:not(:first-child) {
+      margin-left: 2rem; }
     .features .content .actions {
       margin-top: auto; }
 
