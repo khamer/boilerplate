@@ -212,31 +212,26 @@
  * asd
  */
 @mixin features {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
+    @include container;
+    display: flex;
     text-align: center;
+
+    .feature {
+        display: flex;
+        flex-grow: 1;
+        flex-basis: 0;
+        flex-flow: column nowrap;
+    }
+
+    .feature:not(:first-child) {
+        margin-left: 2rem;
+    }
+
+    .actions {
+        margin-top: auto;
+    }
 }
 
 .features {
     @include features;
-
-    .content {
-        @include container;
-        display: flex;
-
-        .feature {
-            display: flex;
-            flex-grow: 1;
-            flex-basis: 0;
-            flex-flow: column nowrap;
-        }
-
-        .feature:not(:first-child) {
-            margin-left: 2rem;
-        }
-
-        .actions {
-            margin-top: auto;
-        }
-    }
 }

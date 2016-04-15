@@ -136,31 +136,28 @@
  * asd
  */
 .features {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1024px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  position: relative;
+  display: flex;
   text-align: center; }
-  .features .content {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 1024px;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    position: relative;
-    display: flex; }
-    .features .content::before, .features .content::after {
-      content: "";
-      display: table; }
-    .features .content::after {
-      clear: both; }
-    .features .content .feature {
-      display: flex;
-      flex-grow: 1;
-      flex-basis: 0;
-      flex-flow: column nowrap; }
-    .features .content .feature:not(:first-child) {
-      margin-left: 2rem; }
-    .features .content .actions {
-      margin-top: auto; }
+  .features::before, .features::after {
+    content: "";
+    display: table; }
+  .features::after {
+    clear: both; }
+  .features .feature {
+    display: flex;
+    flex-grow: 1;
+    flex-basis: 0;
+    flex-flow: column nowrap; }
+  .features .feature:not(:first-child) {
+    margin-left: 2rem; }
+  .features .actions {
+    margin-top: auto; }
 
 /* = Variables = */
 /* = Mixins = */
