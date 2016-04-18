@@ -46,11 +46,6 @@
   padding-left: 1rem;
   padding-right: 1rem;
   position: relative; }
-  .container::before, .container::after {
-    content: "";
-    display: table; }
-  .container::after {
-    clear: both; }
 
 /**
  * The columns mixin makes it so that immmediate child elements appear as
@@ -231,6 +226,7 @@ header.primary {
       padding-top: 0.5em; }
 
 .torso {
+  display: flex;
   padding-bottom: 1.5em;
   padding-top: 1.5em; }
 
@@ -422,28 +418,16 @@ sup {
 sub {
   vertical-align: bottom; }
 
-nav {
-  position: relative; }
-  nav::before, nav::after {
-    content: "";
-    display: table; }
-  nav::after {
-    clear: both; }
-  nav ul {
-    list-style: none;
+nav ul {
+  list-style: none;
+  margin-bottom: 0;
+  padding-left: 0;
+  display: flex; }
+  nav ul li {
     margin-bottom: 0;
-    padding-left: 0;
-    position: relative; }
-    nav ul li {
-      display: block;
-      float: left;
-      margin-bottom: 0;
-      white-space: nowrap; }
-      nav ul li a {
-        padding: 0.5em 10px; }
-  nav ul.container {
-    padding-left: 6px;
-    padding-right: 6px; }
+    white-space: nowrap; }
+    nav ul li a {
+      padding: 0.5em 10px; }
 
 .main nav ul li ~ li {
   border-left: 1px solid #DDD; }
@@ -524,18 +508,18 @@ nav.secondary {
 nav.utility {
   display: none; }
 
-nav.supplemental ul li {
-  float: none; }
-  nav.supplemental ul li a {
+nav.supplemental ul {
+  flex-direction: column; }
+  nav.supplemental ul a {
     display: block;
     padding: 0.25em 0; }
-  nav.supplemental ul li a:hover {
+  nav.supplemental ul a:hover {
     color: #0394CD; }
-nav.supplemental ul ul a {
-  color: #888;
-  font-size: 0.75rem;
-  line-height: 2;
-  padding: 0; }
+  nav.supplemental ul ul a {
+    color: #888;
+    font-size: 0.75rem;
+    line-height: 2;
+    padding: 0; }
 nav.supplemental > ul > li {
   padding-bottom: 0.5em; }
 nav.supplemental > ul > li ~ li {
@@ -775,8 +759,7 @@ table {
   nav.primary::before, nav.primary ul::before {
     display: none; }
   nav.primary ul li {
-    display: block;
-    float: left; }
+    display: block; }
     nav.primary ul li a {
       border-top: 0;
       font-family: "Open Sans", Arial, sans-serif; }
@@ -789,13 +772,9 @@ table {
 @media only screen and (min-width: 700px) {
   .torso aside.primary {
     display: block;
-    float: right;
-    width: 25%; }
-
-  .torso aside.primary ~ .main {
-    float: left;
-    padding-right: 2em;
-    width: 75%; } }
+    flex-basis: 25%;
+    order: 2;
+    margin-left: 2rem; } }
 /* = Print Styles = */
 @media print {
   * {

@@ -127,6 +127,7 @@ header.primary {
 }
 
 .torso {
+    display: flex;
     padding-bottom: 1.5em;
     padding-top: 1.5em;
 }
@@ -357,19 +358,13 @@ sub {
 }
 
 nav {
-    @include grouping;
-
-    position: relative;
-
     ul {
         list-style: none;
         margin-bottom: 0;
         padding-left: 0;
-        position: relative;
+        display: flex;
 
         li {
-            display: block;
-            float: left;
             margin-bottom: 0;
             white-space: nowrap;
 
@@ -377,11 +372,6 @@ nav {
                 padding: 0.5em 10px;
             }
         }
-    }
-
-    ul.container {
-        padding-left: 6px;
-        padding-right: 6px;
     }
 }
 
@@ -471,17 +461,14 @@ nav.utility {
 
 nav.supplemental {
     ul {
-        li {
-            float: none;
+        flex-direction: column;
+        a {
+            display: block;
+            padding: 0.25em 0;
+        }
 
-            a {
-                display: block;
-                padding: 0.25em 0;
-            }
-
-            a:hover {
-                color: $link;
-            }
+        a:hover {
+            color: $link;
         }
 
         ul {
@@ -766,7 +753,6 @@ table {
         ul {
             li {
                 display: block;
-                float: left;
 
                 a {
                     border-top: 0;
@@ -793,13 +779,9 @@ table {
 @media only screen and (min-width: 700px) {
     .torso aside.primary {
         display: block;
-        float: right;
-        width: 25%;
-    }
-    .torso aside.primary ~ .main {
-        float: left;
-        padding-right: 2em;
-        width: 75%;
+        flex-basis: 25%;
+        order: 2;
+        margin-left: 2rem;
     }
 }
 
