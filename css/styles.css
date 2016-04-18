@@ -22,15 +22,23 @@
  * Print Styles
  */
 /* = Web Fonts = */
+/**
+ * The grouping mixin acts as a clear fix; it makes sure that this element
+ * fully contains any floated childen elements by including psuedo elements
+ * with display: table.
+ */
 @import url(//fonts.googleapis.com/css?family=Open+Sans:400,600);
-/* = Variables = */
-/* = Mixins = */
-.container::before, .container::after, .group::before, .group::after {
+.group::before, .group::after {
   content: "";
   display: table; }
-.container::after, .group::after {
+.group::after {
   clear: both; }
 
+/**
+ * The container mixin imposes the 'site wide' content max width upcon its
+ * contents through the use of max-width and auto margins. It also ensures
+ * at least 1rem padding on the left and right.
+ */
 .container {
   margin-left: auto;
   margin-right: auto;
@@ -39,20 +47,132 @@
   padding-right: 1rem;
   position: relative; }
 
+/**
+ * The columns mixin makes it so that immmediate child elements appear as
+ * columns. It is responsive, allowing you to specify the media query at which
+ * to switch the layout from stacking to columns.
+ *
+ * Additionally, it assumes the use of <hr> elements to create visual gutters
+ * that are only visible while displayed as columns.
+ */
 .columns > hr {
   display: none; }
 @media only screen and (min-width: 600px) {
   .columns {
-    display: table;
-    table-layout: fixed;
-    width: 100%; }
+    display: flex; }
     .columns > * {
-      display: table-cell;
-      vertical-align: top; }
-    .columns > hr {
-      display: table-cell;
-      width: 1rem; } }
+      flex-basis: 0;
+      flex-grow: 1; }
+      .columns > *:not(:first-child) {
+        margin-left: 3rem; } }
 
+/**
+ * The fontawesome mixin simplifies including the fontawesome CSS properties,
+ * and you can optionally specify a character to have it also set the content
+ * property (for use in psuedo elements.)
+ */
+/**
+ * The no-bullets mixin hides bullets, including those created through the
+ * ::before psuedo element.
+ */
+/**
+ * The dropdown mixin provides CSS only dropdowns for the a nav element.
+ *
+ * It expects the each dropdown to be within an <li> like this:
+ *
+ *     <li>
+ *         <a>Menu Title</a>
+ *         <div class="dropdown">
+ *             <ul>
+ *                 <li><a>Menu Item</a></li>
+ *                 <li><a>Menu Item</a></li>
+ *             </ul>
+ *         </div>
+ *     </li>
+ *
+ * by default, it hides all Menu Items on mobile.
+ */
+/**
+ * The tiles mixin provides responsive tiles, with gutters, making use of
+ * display: flex.
+ */
+@media only screen and (min-width: 600px) {
+  .tiles {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start; }
+    .tiles > .tile:nth-child(n) {
+      margin-left: 3em;
+      width: calc(50% - 1.5em); }
+    .tiles > .tile:nth-child(2n + 1) {
+      margin-left: 0; } }
+@media only screen and (min-width: 900px) {
+  .tiles {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    -webkit-justify-content: flex-start;
+    justify-content: flex-start; }
+    .tiles > .tile:nth-child(n) {
+      margin-left: 3em;
+      width: calc(33.33333% - 2em); }
+    .tiles > .tile:nth-child(3n + 1) {
+      margin-left: 0; } }
+
+/**
+ * asd
+ */
+.features {
+  text-align: center; }
+  .features > hr {
+    display: none; }
+  @media only screen and (min-width: 600px) {
+    .features {
+      display: flex; }
+      .features > * {
+        flex-basis: 0;
+        flex-grow: 1; }
+        .features > *:not(:first-child) {
+          margin-left: 3rem; } }
+  .features .feature {
+    display: flex;
+    flex-grow: 1;
+    flex-basis: 0;
+    flex-flow: column nowrap; }
+  .features .actions {
+    margin-top: auto; }
+
+/**
+ * asd
+ */
+.left-half-container {
+  display: flex; }
+  .left-half-container > div {
+    flex-basis: 50%; }
+  .left-half-container > div ~ div {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    max-width: 512px;
+    margin-left: auto; }
+  .left-half-container > div:first-child {
+    order: 2; }
+
+.right-half-container {
+  display: flex; }
+  .right-half-container > div {
+    flex-basis: 50%; }
+  .right-half-container > div ~ div {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    max-width: 512px;
+    margin-right: auto; }
+
+/* = Variables = */
+/* = Mixins = */
 /* = Base = */
 a, abbr, address, article, aside, audio, b, blockquote, body, canvas, cite, code, dd, div, dl, dt, em, fieldset, footer, form, h1, h2, h3, h4, h5, h6, header, html, hr, i, iframe, img, label, li, nav, object, ol, p, pre, section, span, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, ul, video {
   border: 0;
@@ -95,37 +215,6 @@ img {
   text-shadow: none; }
 
 /* = Layout = */
-.container::before, .container::after,
-.group::before,
-.group::after {
-  content: "";
-  display: table; }
-.container::after,
-.group::after {
-  clear: both; }
-
-.container {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 1024px;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  position: relative; }
-
-.columns > hr {
-  display: none; }
-@media only screen and (min-width: 600px) {
-  .columns {
-    display: table;
-    table-layout: fixed;
-    width: 100%; }
-    .columns > * {
-      display: table-cell;
-      vertical-align: top; }
-    .columns > hr {
-      display: table-cell;
-      width: 1rem; } }
-
 header.primary {
   background: #1a1a1a; }
   header.primary .branding h1 {
@@ -137,6 +226,7 @@ header.primary {
       padding-top: 0.5em; }
 
 .torso {
+  display: flex;
   padding-bottom: 1.5em;
   padding-top: 1.5em; }
 
@@ -328,28 +418,16 @@ sup {
 sub {
   vertical-align: bottom; }
 
-nav {
-  position: relative; }
-  nav::before, nav::after {
-    content: "";
-    display: table; }
-  nav::after {
-    clear: both; }
-  nav ul {
-    list-style: none;
+nav ul {
+  list-style: none;
+  margin-bottom: 0;
+  padding-left: 0;
+  display: flex; }
+  nav ul li {
     margin-bottom: 0;
-    padding-left: 0;
-    position: relative; }
-    nav ul li {
-      display: block;
-      float: left;
-      margin-bottom: 0;
-      white-space: nowrap; }
-      nav ul li a {
-        padding: 0.5em 10px; }
-  nav ul.container {
-    padding-left: 6px;
-    padding-right: 6px; }
+    white-space: nowrap; }
+    nav ul li a {
+      padding: 0.5em 10px; }
 
 .main nav ul li ~ li {
   border-left: 1px solid #DDD; }
@@ -357,6 +435,22 @@ nav {
 /* = Navigation = */
 nav.primary {
   z-index: 1; }
+  nav.primary li .dropdown {
+    display: none; }
+  @media only screen and (min-width: 600px) {
+    nav.primary li:hover {
+      position: relative; }
+      nav.primary li:hover .dropdown {
+        background: #333;
+        display: block;
+        left: 0;
+        min-width: 100%;
+        position: absolute; }
+        nav.primary li:hover .dropdown li {
+          float: none; }
+          nav.primary li:hover .dropdown li a {
+            font-family: inherit;
+            font-size: 0.8125rem; } }
   nav.primary::before, nav.primary ul::before {
     font: normal normal normal 1rem / 1 FontAwesome;
     -moz-osx-font-smoothing: grayscale;
@@ -375,18 +469,23 @@ nav.primary {
     right: 0; }
   nav.primary ul::before {
     color: #555; }
-  nav.primary ul li {
+  nav.primary ul[data-focus="focus"]::before {
+    display: none; }
+  nav.primary ul[data-focus="focus"] li {
+    display: block; }
+  nav.primary ul.container {
+    padding-left: 0;
+    padding-right: 0; }
+  nav.primary li {
     display: none;
     float: none; }
-    nav.primary ul li .dropdown {
-      display: none; }
-    nav.primary ul li a {
+    nav.primary li a {
       border-top: 1px solid #212121;
-      color: #FFF;
+      color: #fff;
       display: block;
       font-family: "Open Sans", Arial, sans-serif;
       padding: 0.5em 1rem; }
-      nav.primary ul li a::before {
+      nav.primary li a::before {
         font: normal normal normal 1rem / 1 FontAwesome;
         -moz-osx-font-smoothing: grayscale;
         -webkit-font-smoothing: antialiased;
@@ -396,19 +495,12 @@ nav.primary {
         display: inline-block;
         content: "\f054";
         float: right; }
-  nav.primary ul li:hover, nav.primary ul li.active {
-    background: #1A1A1A; }
-    nav.primary ul li:hover > a, nav.primary ul li.active > a {
+  nav.primary li:hover, nav.primary li.active {
+    background: #1a1a1a; }
+    nav.primary li:hover > a, nav.primary li.active > a {
       color: #0394CD; }
-      nav.primary ul li:hover > a::before, nav.primary ul li.active > a::before {
+      nav.primary li:hover > a::before, nav.primary li.active > a::before {
         margin-right: -0.5em; }
-  nav.primary ul[data-focus="focus"]::before {
-    display: none; }
-  nav.primary ul[data-focus="focus"] li {
-    display: block; }
-  nav.primary ul.container {
-    padding-left: 0;
-    padding-right: 0; }
 
 nav.secondary {
   display: none; }
@@ -416,18 +508,18 @@ nav.secondary {
 nav.utility {
   display: none; }
 
-nav.supplemental ul li {
-  float: none; }
-  nav.supplemental ul li a {
+nav.supplemental ul {
+  flex-direction: column; }
+  nav.supplemental ul a {
     display: block;
     padding: 0.25em 0; }
-  nav.supplemental ul li a:hover {
+  nav.supplemental ul a:hover {
     color: #0394CD; }
-nav.supplemental ul ul a {
-  color: #888;
-  font-size: 0.75rem;
-  line-height: 2;
-  padding: 0; }
+  nav.supplemental ul ul a {
+    color: #888;
+    font-size: 0.75rem;
+    line-height: 2;
+    padding: 0; }
 nav.supplemental > ul > li {
   padding-bottom: 0.5em; }
 nav.supplemental > ul > li ~ li {
@@ -667,39 +759,22 @@ table {
   nav.primary::before, nav.primary ul::before {
     display: none; }
   nav.primary ul li {
-    display: block;
-    float: left; }
+    display: block; }
     nav.primary ul li a {
       border-top: 0;
       font-family: "Open Sans", Arial, sans-serif; }
       nav.primary ul li a::before {
         display: none; }
-  nav.primary ul li li {
-    float: none; }
-    nav.primary ul li li a {
-      font-family: inherit;
-      font-size: 0.8125rem; }
   nav.primary ul li.active, nav.primary ul li:hover {
     background: none; }
   nav.primary ul li:hover {
-    background: #333;
-    position: relative; }
-    nav.primary ul li:hover .dropdown {
-      background: #333;
-      display: block;
-      left: 0;
-      min-width: 100%;
-      position: absolute; } }
+    background: #333; } }
 @media only screen and (min-width: 700px) {
   .torso aside.primary {
     display: block;
-    float: right;
-    width: 25%; }
-
-  .torso aside.primary ~ .main {
-    float: left;
-    padding-right: 2em;
-    width: 75%; } }
+    flex-basis: 25%;
+    order: 2;
+    margin-left: 2rem; } }
 /* = Print Styles = */
 @media print {
   * {

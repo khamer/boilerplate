@@ -1,0 +1,262 @@
+/**
+ * The grouping mixin acts as a clear fix; it makes sure that this element
+ * fully contains any floated childen elements by including psuedo elements
+ * with display: table.
+ */
+@mixin grouping {
+    &::before, &::after {
+        content: "";
+        display: table;
+    }
+
+    &::after {
+        clear: both;
+    }
+}
+
+.group {
+    @include grouping;
+}
+
+
+/**
+ * The container mixin imposes the 'site wide' content max width upcon its
+ * contents through the use of max-width and auto margins. It also ensures
+ * at least 1rem padding on the left and right.
+ */
+@mixin container {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 1024px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    position: relative;
+}
+
+.container {
+    @include container;
+}
+
+
+/**
+ * The columns mixin makes it so that immmediate child elements appear as
+ * columns. It is responsive, allowing you to specify the media query at which
+ * to switch the layout from stacking to columns.
+ *
+ * Additionally, it assumes the use of <hr> elements to create visual gutters
+ * that are only visible while displayed as columns.
+ */
+@mixin columns($query: "min-width: 600px", $gutter: 3rem) {
+    > hr {
+        display: none;
+    }
+
+    @media only screen and ($query) {
+        & {
+            display: flex;
+
+            > * {
+                flex-basis: 0;
+                flex-grow: 1;
+
+                &:not(:first-child) {
+                    margin-left: $gutter;
+                }
+            }
+        }
+    }
+}
+
+.columns {
+    @include columns;
+}
+
+
+/**
+ * The fontawesome mixin simplifies including the fontawesome CSS properties,
+ * and you can optionally specify a character to have it also set the content
+ * property (for use in psuedo elements.)
+ */
+@mixin fontawesome($character:"") {
+	font: normal normal normal 1rem unquote("/") 1 FontAwesome;
+	-moz-osx-font-smoothing: grayscale;
+	-webkit-font-smoothing: antialiased;
+	speak: none;
+	text-rendering: auto;
+	text-transform: none;
+
+	@if $character != "" {
+		content: $character;
+	} @else {
+		display: inline-block;
+	}
+}
+
+
+/**
+ * The no-bullets mixin hides bullets, including those created through the
+ * ::before psuedo element.
+ */
+@mixin no-bullets {
+    list-style: none;
+    padding-left: 0;
+
+    li::before {
+        display: none;
+    }
+}
+
+
+@mixin transition($properties: all, $duration: 250ms, $easing: ease-in-out) {
+    @if length($properties) > 1 {
+        -webkit-transition-property: $properties;
+        transition-property: $properties;
+    } @else {
+        -webkit-transition: $properties $duration $easing;
+        transition: $properties $duration $easing;
+    }
+}
+
+
+/**
+ * The dropdown mixin provides CSS only dropdowns for the a nav element.
+ *
+ * It expects the each dropdown to be within an <li> like this:
+ *
+ *     <li>
+ *         <a>Menu Title</a>
+ *         <div class="dropdown">
+ *             <ul>
+ *                 <li><a>Menu Item</a></li>
+ *                 <li><a>Menu Item</a></li>
+ *             </ul>
+ *         </div>
+ *     </li>
+ *
+ * by default, it hides all Menu Items on mobile.
+ */
+@mixin dropdown-nav {
+    z-index: 1;
+
+    li {
+        .dropdown {
+            display: none;
+        }
+    }
+
+    @media only screen and (min-width: 600px) {
+        li:hover {
+            position: relative;
+
+            .dropdown {
+                background: #333;
+                display: block;
+                left: 0;
+                min-width: 100%;
+                position: absolute;
+
+                li {
+                    float: none;
+
+                    a {
+                        font-family: inherit;
+                        font-size: 0.8125rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+/**
+ * The tiles mixin provides responsive tiles, with gutters, making use of
+ * display: flex.
+ */
+@mixin tiles($gutterWidth: 3em, $breakpoints: 600px 900px) {
+
+    $start: 2;
+
+    @each $bp in $breakpoints {
+        @media only screen and (min-width: $bp) {
+            display: -webkit-flex;
+            display: flex;
+             -webkit-flex-flow: row wrap;
+            flex-flow: row wrap;
+            -webkit-justify-content: flex-start;
+            justify-content: flex-start;
+
+            > .tile:nth-child(n) {
+                margin-left: $gutterWidth;
+                width: calc(#{100/$start}% - #{$gutterWidth * ($start - 1) / $start});
+            }
+
+            > .tile:nth-child(#{$start}n + 1) {
+                margin-left: 0;
+            }
+        }
+
+        $start: $start + 1;
+    }
+}
+.tiles {
+    @include tiles;
+}
+
+
+
+
+/**
+ * asd
+ */
+@mixin features {
+    @include columns;
+    text-align: center;
+
+    .feature {
+        display: flex;
+        flex-grow: 1;
+        flex-basis: 0;
+        flex-flow: column nowrap;
+    }
+
+    .actions {
+        margin-top: auto;
+    }
+}
+
+.features {
+    @include features;
+}
+
+
+/**
+ * asd
+ */
+@mixin half-contained($textSide: left) {
+    display: flex;
+
+    > div {
+        flex-basis: 50%;
+    }
+
+    > div ~ div {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        max-width: 512px;
+        margin-#{$textSide}: auto;
+    }
+    @if $textSide == left {
+        > div:first-child {
+            order: 2;
+        }
+    }
+}
+
+.left-half-container {
+    @include half-contained();
+}
+
+.right-half-container {
+    @include half-contained(right);
+}

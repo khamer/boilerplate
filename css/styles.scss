@@ -23,6 +23,7 @@
  */
 
 /* = Web Fonts = */
+@import "components";
 @import url(//fonts.googleapis.com/css?family=Open+Sans:400,600);
 
 /* = Variables = */
@@ -56,104 +57,7 @@ $body-fonts:    "Helvetica Neue", Arial, sans-serif;
 $heading-fonts: "Open Sans", Arial, sans-serif;
 
 /* = Mixins = */
-@mixin grouping {
-    &::before, &::after {
-        content: "";
-        display: table;
-    }
 
-    &::after {
-        clear: both;
-    }
-}
-
-.container, .group {
-    @include grouping;
-}
-
-@mixin container {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 1024px;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    position: relative;
-}
-
-.container {
-    @include container;
-}
-
-@mixin columns($query: "min-width: 600px") {
-    > hr {
-        display: none;
-    }
-
-    @media only screen and ($query) {
-        & {
-            display: table;
-            table-layout: fixed;
-            width: 100%;
-
-            > * {
-                display: table-cell;
-                vertical-align: top;
-            }
-            > hr {
-                display: table-cell;
-                width: 1rem;
-            }
-        }
-    }
-}
-
-.columns {
-    @include columns;
-}
-
-@mixin fontawesome($character:"") {
-	font: normal normal normal 1rem unquote("/") 1 FontAwesome;
-	-moz-osx-font-smoothing: grayscale;
-	-webkit-font-smoothing: antialiased;
-	speak: none;
-	text-rendering: auto;
-	text-transform: none;
-
-	@if $character != "" {
-		content: $character;
-	} @else {
-		display: inline-block;
-	}
-}
-
-@mixin no-bullets {
-    list-style: none;
-    padding-left: 0;
-
-    li::before {
-        display: none;
-    }
-}
-
-@mixin header-font {
-	font-family: $heading-fonts;
-	font-weight: normal;
-	padding-bottom: 1.5 * $rem;
-	padding-top: 1.5 * $rem;
-	&:first-child {
-		padding-top: 0;
-	}
-}
-
-@mixin transition($properties: all, $duration: 250ms, $easing: ease-in-out) {
-    @if length($properties) > 1 {
-        -webkit-transition-property: $properties;
-        transition-property: $properties;
-    } @else {
-        -webkit-transition: $properties $duration $easing;
-        transition: $properties $duration $easing;
-    }
-}
 
 /* = Base = */
 a, abbr, address, article, aside, audio, b, blockquote, body, canvas, cite, code, dd, div, dl, dt, em, fieldset, footer, form, h1, h2, h3, h4, h5, h6, header, html, hr, i, iframe, img, label, li, nav, object, ol, p, pre, section, span, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, ul, video {
@@ -205,19 +109,6 @@ img {
 
 
 /* = Layout = */
-.container,
-.group {
-	@include grouping;
-}
-
-.container {
-	@include container;
-}
-
-.columns {
-	@include columns;
-}
-
 header.primary {
     background: #1a1a1a;
 
@@ -236,6 +127,7 @@ header.primary {
 }
 
 .torso {
+    display: flex;
     padding-bottom: 1.5em;
     padding-top: 1.5em;
 }
@@ -466,19 +358,13 @@ sub {
 }
 
 nav {
-    @include grouping;
-
-    position: relative;
-
     ul {
         list-style: none;
         margin-bottom: 0;
         padding-left: 0;
-        position: relative;
+        display: flex;
 
         li {
-            display: block;
-            float: left;
             margin-bottom: 0;
             white-space: nowrap;
 
@@ -486,11 +372,6 @@ nav {
                 padding: 0.5em 10px;
             }
         }
-    }
-
-    ul.container {
-        padding-left: 6px;
-        padding-right: 6px;
     }
 }
 
@@ -500,7 +381,7 @@ nav {
 
 /* = Navigation = */
 nav.primary {
-    z-index: 1;
+    @include dropdown-nav;
 
     &::before, ul::before {
         @include fontawesome;
@@ -520,41 +401,6 @@ nav.primary {
             color: $plain-text;
         }
 
-        li {
-            display: none;
-            float: none;
-
-            .dropdown {
-                display: none;
-            }
-
-            a {
-                border-top: 1px solid #212121;
-                color: #FFF;
-                display: block;
-                font-family: $heading-fonts;
-                padding: 0.5em 1rem;
-
-                &::before {
-                    @include fontawesome;
-
-                    content: "\f054";
-                    float: right;
-                }
-            }
-        }
-
-        li:hover, li.active {
-            background: #1A1A1A;
-
-            > a {
-                color: $link;
-
-                &::before {
-                    margin-right: -0.5em;
-                }
-            }
-        }
     }
 
     ul[data-focus="focus"] {
@@ -571,6 +417,38 @@ nav.primary {
         padding-left: 0;
         padding-right: 0;
     }
+
+    li {
+        display: none;
+        float: none;
+
+        a {
+            border-top: 1px solid #212121;
+            color: #fff;
+            display: block;
+            font-family: $heading-fonts;
+            padding: 0.5em 1rem;
+
+            &::before {
+                @include fontawesome;
+
+                content: "\f054";
+                float: right;
+            }
+        }
+    }
+
+    li:hover, li.active {
+        background: #1a1a1a;
+
+        > a {
+            color: $link;
+
+            &::before {
+                margin-right: -0.5em;
+            }
+        }
+    }
 }
 
 nav.secondary {
@@ -583,17 +461,14 @@ nav.utility {
 
 nav.supplemental {
     ul {
-        li {
-            float: none;
+        flex-direction: column;
+        a {
+            display: block;
+            padding: 0.25em 0;
+        }
 
-            a {
-                display: block;
-                padding: 0.25em 0;
-            }
-
-            a:hover {
-                color: $link;
-            }
+        a:hover {
+            color: $link;
         }
 
         ul {
@@ -878,7 +753,7 @@ table {
         ul {
             li {
                 display: block;
-                float: left;
+
                 a {
                     border-top: 0;
                     font-family: $heading-fonts;
@@ -889,47 +764,24 @@ table {
                 }
             }
 
-            li {
-                li {
-                    float: none;
-
-                    a {
-                        font-family: inherit;
-                        font-size: 0.8125rem;
-                    }
-                }
-            }
-
             li.active, li:hover {
                 background: none;
             }
 
             li:hover {
                 background: #333;
-                position: relative;
-
-                .dropdown {
-                    background: #333;
-                    display: block;
-                    left: 0;
-                    min-width: 100%;
-                    position: absolute;
-                }
             }
         }
+
     }
 }
 
 @media only screen and (min-width: 700px) {
     .torso aside.primary {
         display: block;
-        float: right;
-        width: 25%;
-    }
-    .torso aside.primary ~ .main {
-        float: left;
-        padding-right: 2em;
-        width: 75%;
+        flex-basis: 25%;
+        order: 2;
+        margin-left: 2rem;
     }
 }
 
