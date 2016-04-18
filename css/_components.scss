@@ -48,7 +48,7 @@
  * Additionally, it assumes the use of <hr> elements to create visual gutters
  * that are only visible while displayed as columns.
  */
-@mixin columns($query: "min-width: 600px") {
+@mixin columns($query: "min-width: 600px", $gutter: 3rem) {
     > hr {
         display: none;
     }
@@ -62,7 +62,7 @@
                 flex-grow: 1;
 
                 &:not(:first-child) {
-                    margin-left: 1rem;
+                    margin-left: $gutter;
                 }
             }
         }
@@ -187,14 +187,14 @@
             flex-flow: row wrap;
             -webkit-justify-content: flex-start;
             justify-content: flex-start;
-            margin-left: -$gutterWidth/2;
-            margin-right: -$gutterWidth/2;
-            overflow-x: hidden;
 
-            > .tile {
-                margin-left: $gutterWidth/2;
-                margin-right: $gutterWidth/2;
-                width: calc(#{100/$start}% - #{$gutterWidth});
+            > .tile:nth-child(n) {
+                margin-left: $gutterWidth;
+                width: calc(#{100/$start}% - #{$gutterWidth * ($start - 1) / $start});
+            }
+
+            > .tile:nth-child(#{$start}n + 1) {
+                margin-left: 0;
             }
         }
 
@@ -212,8 +212,7 @@
  * asd
  */
 @mixin features {
-    @include container;
-    display: flex;
+    @include columns;
     text-align: center;
 
     .feature {
@@ -223,10 +222,6 @@
         flex-flow: column nowrap;
     }
 
-    .feature:not(:first-child) {
-        margin-left: 2rem;
-    }
-
     .actions {
         margin-top: auto;
     }
@@ -234,4 +229,36 @@
 
 .features {
     @include features;
+}
+
+
+/**
+ * asd
+ */
+@mixin half-contained($textSide: left) {
+    display: flex;
+
+    > div {
+        flex-basis: 50%;
+    }
+
+    > div ~ div {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        max-width: 512px;
+        margin-#{$textSide}: auto;
+    }
+    @if $textSide == left {
+        > div:first-child {
+            order: 2;
+        }
+    }
+}
+
+.left-half-container {
+    @include half-contained();
+}
+
+.right-half-container {
+    @include half-contained(right);
 }

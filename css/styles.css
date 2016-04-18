@@ -69,7 +69,7 @@
       flex-basis: 0;
       flex-grow: 1; }
       .columns > *:not(:first-child) {
-        margin-left: 1rem; } }
+        margin-left: 3rem; } }
 
 /**
  * The fontawesome mixin simplifies including the fontawesome CSS properties,
@@ -108,14 +108,12 @@
     -webkit-flex-flow: row wrap;
     flex-flow: row wrap;
     -webkit-justify-content: flex-start;
-    justify-content: flex-start;
-    margin-left: -1.5em;
-    margin-right: -1.5em;
-    overflow-x: hidden; }
-    .tiles > .tile {
-      margin-left: 1.5em;
-      margin-right: 1.5em;
-      width: calc(50% - 3em); } }
+    justify-content: flex-start; }
+    .tiles > .tile:nth-child(n) {
+      margin-left: 3em;
+      width: calc(50% - 1.5em); }
+    .tiles > .tile:nth-child(2n + 1) {
+      margin-left: 0; } }
 @media only screen and (min-width: 900px) {
   .tiles {
     display: -webkit-flex;
@@ -123,41 +121,60 @@
     -webkit-flex-flow: row wrap;
     flex-flow: row wrap;
     -webkit-justify-content: flex-start;
-    justify-content: flex-start;
-    margin-left: -1.5em;
-    margin-right: -1.5em;
-    overflow-x: hidden; }
-    .tiles > .tile {
-      margin-left: 1.5em;
-      margin-right: 1.5em;
-      width: calc(33.33333% - 3em); } }
+    justify-content: flex-start; }
+    .tiles > .tile:nth-child(n) {
+      margin-left: 3em;
+      width: calc(33.33333% - 2em); }
+    .tiles > .tile:nth-child(3n + 1) {
+      margin-left: 0; } }
 
 /**
  * asd
  */
 .features {
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 1024px;
-  padding-left: 1rem;
-  padding-right: 1rem;
-  position: relative;
-  display: flex;
   text-align: center; }
-  .features::before, .features::after {
-    content: "";
-    display: table; }
-  .features::after {
-    clear: both; }
+  .features > hr {
+    display: none; }
+  @media only screen and (min-width: 600px) {
+    .features {
+      display: flex; }
+      .features > * {
+        flex-basis: 0;
+        flex-grow: 1; }
+        .features > *:not(:first-child) {
+          margin-left: 3rem; } }
   .features .feature {
     display: flex;
     flex-grow: 1;
     flex-basis: 0;
     flex-flow: column nowrap; }
-  .features .feature:not(:first-child) {
-    margin-left: 2rem; }
   .features .actions {
     margin-top: auto; }
+
+/**
+ * asd
+ */
+.left-half-container {
+  display: flex; }
+  .left-half-container > div {
+    flex-basis: 50%; }
+  .left-half-container > div ~ div {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    max-width: 512px;
+    margin-left: auto; }
+  .left-half-container > div:first-child {
+    order: 2; }
+
+.right-half-container {
+  display: flex; }
+  .right-half-container > div {
+    flex-basis: 50%; }
+  .right-half-container > div ~ div {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    max-width: 512px;
+    margin-right: auto; }
 
 /* = Variables = */
 /* = Mixins = */
