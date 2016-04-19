@@ -112,6 +112,10 @@ img {
 header.primary {
     background: #1a1a1a;
 
+    > .container {
+        display: flex;
+    }
+
     .branding {
         h1 {
             padding-bottom: 0;
@@ -123,6 +127,14 @@ header.primary {
                 padding-top: 0.5em;
             }
         }
+    }
+
+    .branding ~ div {
+        align-items: flex-end;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        justify-content: space-between;
     }
 }
 
@@ -381,7 +393,7 @@ nav {
 
 /* = Navigation = */
 nav.primary {
-    @include dropdown-nav;
+    @include dropdown-nav(right);
 
     &::before, ul::before {
         @include fontawesome;
@@ -449,14 +461,6 @@ nav.primary {
             }
         }
     }
-}
-
-nav.secondary {
-    display: none;
-}
-
-nav.utility {
-    display: none;
 }
 
 nav.supplemental {
@@ -709,10 +713,7 @@ table {
     }
 
     nav.utility {
-        display: block;
-        position: absolute;
-        right: 32px;
-        top: 1em;
+        margin-top: 1rem;
 
         a {
             color: #FFF;

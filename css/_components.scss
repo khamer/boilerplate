@@ -135,28 +135,29 @@
  *
  * by default, it hides all Menu Items on mobile.
  */
-@mixin dropdown-nav {
-    z-index: 1;
-
-    li {
-        .dropdown {
-            display: none;
-        }
+@mixin dropdown-nav($side: left) {
+    .dropdown {
+        display: none;
     }
 
     @media only screen and (min-width: 600px) {
         li:hover {
             position: relative;
+            z-index: 1;
 
             .dropdown {
                 background: #333;
-                display: block;
-                left: 0;
+                display: inherit;
+                @if $side == left {
+                    left: 0;
+                } @else {
+                    right: 0;
+                }
                 min-width: 100%;
                 position: absolute;
 
-                li {
-                    float: none;
+                ul {
+                    flex-direction: column;
 
                     a {
                         font-family: inherit;
