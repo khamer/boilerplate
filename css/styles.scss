@@ -60,7 +60,7 @@ $heading-fonts: "Open Sans", Arial, sans-serif;
 
 
 /* = Base = */
-a, abbr, address, article, aside, audio, b, blockquote, body, canvas, cite, code, dd, div, dl, dt, em, fieldset, footer, form, h1, h2, h3, h4, h5, h6, header, html, hr, i, iframe, img, label, li, nav, object, ol, p, pre, section, span, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, ul, video {
+a, abbr, address, article, aside, audio, b, blockquote, body, canvas, cite, code, dd, div, dl, dt, em, fieldset, footer, form, h1, h2, h3, h4, h5, h6, header, html, hr, i, iframe, img, label, li, main, nav, object, ol, p, pre, section, span, strong, sub, sup, table, tbody, td, tfoot, th, thead, tr, ul, video {
     border: 0;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -73,7 +73,7 @@ a, abbr, address, article, aside, audio, b, blockquote, body, canvas, cite, code
     vertical-align: baseline;
 }
 
-article, aside, audio, canvas, footer, header, nav, section, video {
+article, aside, audio, canvas, footer, header, main, nav, section, video {
     display: block;
 }
 
@@ -140,11 +140,13 @@ header.primary {
 
 .torso {
     display: flex;
-    padding-bottom: 1.5em;
-    padding-top: 1.5em;
 }
 
-.main section {
+main {
+    width: 100%;
+}
+
+main section {
 
     &:not(:last-child) {
         margin-bottom: 1.5em;
@@ -156,7 +158,7 @@ aside.primary {
     display: none;
 }
 
-.main aside {
+main aside {
     background: mix($torso-bg, $meta-text, 80%);
     border-radius: 4px;
     color: $meta-text;
@@ -387,7 +389,7 @@ nav {
     }
 }
 
-.main nav ul li ~ li {
+main nav ul li ~ li {
     border-left: 1px solid $border;
 }
 
@@ -706,7 +708,7 @@ table {
 
 /* = Media Queries = */
 @media only screen and (min-width: 600px) {
-    .main aside {
+    main aside {
         float: right;
         margin-left: 1em;
         width: 33.33%;

@@ -51,7 +51,7 @@
         display: none;
     }
 
-    @media only screen and ($query) {
+    @media only screen and (unquote($query)) {
         & {
             display: flex;
 
@@ -260,4 +260,22 @@
 
 .right-half-container {
     @include half-contained(right);
+}
+
+@mixin hero {
+}
+
+.hero {
+    &::before {
+        display: block;
+        content: '';
+        float: left;
+        padding-top: 25%;
+    }
+
+    &::after {
+        content: '';
+        display: table;
+        clear: both;
+    }
 }
